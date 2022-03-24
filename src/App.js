@@ -10,7 +10,7 @@ function App() {
         <Route path="/Countries" exact>
           <Home />
         </Route>
-        <Route path="/Countries/details">
+        <Route path="/Countries/details" exact>
           <MoreDetails />
         </Route>
       </Switch>
