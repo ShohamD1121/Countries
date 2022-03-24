@@ -10,7 +10,7 @@ const MoreDetails = () => {
   const history = useHistory();
   
   const gohomeBtn = () => {
-    history.push("/");
+    history.push("/Countries");
   };
 
   useEffect(() => {

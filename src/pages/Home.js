@@ -126,7 +126,7 @@ const Home = () => {
         {isLoading && cardsLoading()}
         {countries.length > 0 &&
           countries.map((country, index) => (
-            <Link to={{ pathname: "details", state: country }} key={index}>
+            <Link to={{ pathname: "Countries/details", state: country }} key={index}>
               <Details
                 title={country.name}
                 img_url={
