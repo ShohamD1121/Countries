@@ -6,6 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
+  let temp = [];
+  let temp2 = [];
+  const [tempCountries, setTempCountries] = useState([]);
+  const [allCountries, setAllCountries] = useState([]);
   const [countries, setCountries] = useState([]);
   const [mode, setMode] = useState("Light Mode");
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +48,9 @@ const Home = () => {
     !dontLoad && setIsLoading(true);
     const res = await fetch("https://restcountries.com/v2/all");
     const data = await res.json();
+    setAllCountries(data);
     setCountries(data);
+    setTempCountries(data);
     setIsLoading(false);
   };
 
@@ -65,22 +71,26 @@ const Home = () => {
 
   const searchCountry = async (name) => {
     if (name.length === 0) {
-      getCountries(1);
-      return;
+      setCountries(tempCountries);
+    } else {
+      temp2 = countries.filter((country) => {
+        return country.name.toLowerCase().includes(name.toLowerCase());
+      });
+      setCountries(temp2);
     }
-    const res = await fetch(`https://restcountries.com/v2/name/${name}`);
-    const data = await res.json();
-    setCountries(data);
   };
 
   const filterByRegion = async (region) => {
     if (region === "") return;
     if (region === "all") {
       getCountries(1);
+    } else {
+      temp = allCountries.filter((country) => {
+        return country.region.toLowerCase() === region;
+      });
+      setCountries(temp);
+      setTempCountries(temp)
     }
-    const res = await fetch(`https://restcountries.com/v2/region/${region}`);
-    const data = await res.json();
-    setCountries(data);
   };
 
   return (
@@ -107,7 +117,10 @@ const Home = () => {
             type="text"
             placeholder="Search Country"
             className="pl-10 p-2 w-5/6 shadow-md rounded-md dark:bg-gray-700"
-            onChange={(term) => searchCountry(term.target.value)}
+            onChange={(term) => {
+              console.log(term);
+              searchCountry(term.target.value);
+            }}
           />
         </div>
         <select
@@ -126,7 +139,10 @@ const Home = () => {
         {isLoading && cardsLoading()}
         {countries.length > 0 &&
           countries.map((country, index) => (
-            <Link to={{ pathname: "/Countries/details", state: country }} key={index}>
+            <Link
+              to={{ pathname: "/Countries/details", state: country }}
+              key={index}
+            >
               <Details
                 title={country.name}
                 img_url={
