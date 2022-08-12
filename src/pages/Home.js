@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Details from "../Components/Details";
-import Loading from "../Components/Loading";
+import Loading from "../Components/Loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun, faSearch } from "@fortawesome/free-solid-svg-icons";
+
 
 const Home = () => {
   let temp = [];
@@ -31,7 +32,7 @@ const Home = () => {
 
   const cardsLoading = () => {
     return (
-      <div className="container h-full sm:w-screen w-5/6 text-center grid md:grid-cols-4 sm:grid-cols-2 gap-16 mx-auto">
+      <div className="container h-full sm:w-screen w-5/6 text-center grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-16 mx-auto">
         <Loading />
         <Loading />
         <Loading />
@@ -111,8 +112,8 @@ const Home = () => {
         </div>
       </div>
       <div className="flex container mx-auto sm:mb-16 mb-4 sm:flex-row flex-col text-center">
-        <div>
-          <FontAwesomeIcon className="position: absolute m-3" icon={faSearch} />
+        <div className="my-auto text-center">
+          <FontAwesomeIcon className="absolute m-3" icon={faSearch} />
           <input
             type="text"
             placeholder="Search Country"
@@ -135,7 +136,7 @@ const Home = () => {
           <option value="oceania">Oceania</option>
         </select>
       </div>
-      <div className="container grid md:grid-cols-4 sm:grid-cols-2 gap-16 mx-auto">
+      <div className="container grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-16 mx-auto">
         {isLoading && cardsLoading()}
         {countries.length > 0 &&
           countries.map((country, index) => (
